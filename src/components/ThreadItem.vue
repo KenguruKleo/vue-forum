@@ -7,35 +7,10 @@
       >
         <h2>{{ thread.title }}</h2>
 
-        <div v-for="postId in thread.posts" v-bind:key="postId" class="post-list">
-          <div class="post">
-            <div class="user-info">
-              <a href="#" class="user-name">
-                {{ users[posts[postId].userId].name }}
-              </a>
+        <PostList
+          :posts="posts"
+        />
 
-              <a href="#">
-                <img
-                    class="avatar-large"
-                    :src="users[posts[postId].userId].avatar"
-                    alt=""
-                />
-              </a>
-
-              <p class="desktop-only text-small">107 posts</p>
-            </div>
-
-            <div class="post-content">
-              <div>
-                {{ posts[postId].text }}
-              </div>
-            </div>
-
-            <div class="post-date text-faded">
-              {{ posts[postId].publishedAt }}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -43,9 +18,13 @@
 
 <script>
 
-import { threads, posts, users } from '@/data.json';
+import { threads, posts as sourcePosts } from '@/data.json';
+import PostList from './PostList.vue';
 
 export default {
+  components: {
+    PostList,
+  },
   props: {
     id: {
       required: true,
@@ -55,9 +34,14 @@ export default {
   data() {
     return {
       thread: threads[this.id],
-      posts,
-      users,
     };
+  },
+  computed: {
+    posts() {
+      return Object
+        .values(this.thread.posts)
+        .map(postId => sourcePosts[postId]);
+    },
   },
 };
 </script>
