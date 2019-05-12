@@ -7,25 +7,12 @@
       >
         <h2>{{ thread.title }}</h2>
 
-        <PostList
-          :posts="posts"
-        />
+        <PostList :posts="posts" />
 
-        <form @submit.prevent="addPost">
-          <div class="form-group">
-            <textarea
-              v-model="newPostText"
-              name=""
-              id=""
-              cols="30"
-              rows="10"
-              class="form-input"
-            ></textarea>
-          </div>
-          <div class="form-actions">
-            <button class="btn-blue">Submit post</button>
-          </div>
-        </form>
+        <PostEditor
+          @save="addPost"
+          :threadId="id"
+        />
 
       </div>
     </div>
@@ -35,11 +22,13 @@
 <script>
 
 import { threads, posts as sourcePosts, users } from '@/data.json';
-import PostList from './PostList.vue';
+import PostList from '@/components/PostList.vue';
+import PostEditor from '@/components/PostEditor.vue';
 
 export default {
   components: {
     PostList,
+    PostEditor,
   },
   props: {
     id: {
@@ -50,7 +39,6 @@ export default {
   data() {
     return {
       thread: threads[this.id],
-      newPostText: '',
     };
   },
   computed: {
@@ -61,21 +49,12 @@ export default {
     },
   },
   methods: {
-    addPost() {
-      const postId = `post${Math.random()}`;
-      const post = {
-        text: this.newPostText,
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.id,
-        userId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2',
-        '.key': postId,
-      };
+    addPost({ post }) {
+      const postId = post['.key'];
 
       this.$set(sourcePosts, postId, post);
       this.$set(this.thread.posts, postId, postId);
       this.$set(users[post.userId].posts, postId, postId);
-
-      this.newPostText = '';
     },
   },
 };
