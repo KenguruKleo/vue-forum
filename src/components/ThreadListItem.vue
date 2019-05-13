@@ -14,7 +14,8 @@
 
       <div class="activity">
         <p class="replies-count">
-          {{ repliesCount }} replies
+          {{ repliesCount }}
+          {{ repliesCount === 1 ? 'reply' : 'replies'}}
         </p>
 
 <!--        <img class="avatar-medium"-->
