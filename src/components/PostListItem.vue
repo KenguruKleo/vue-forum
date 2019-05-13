@@ -22,21 +22,19 @@
       </div>
     </div>
 
-    <div
-      class="post-date text-faded"
-      :title="post.publishedAt | humanFriendlyDate"
-    >
-      {{ post.publishedAt | humanFromNow}}
-    </div>
+    <div class="post-date text-faded"><AppDate :timestamp="post.publishedAt" /></div>
   </div>
 </template>
 
 <script>
 
 import { users } from '@/data.json';
-import moment from 'moment';
+import AppDate from '@/components/AppDate.vue';
 
 export default {
+  components: {
+    AppDate,
+  },
   props: {
     post: {
       required: true,
@@ -49,14 +47,6 @@ export default {
     },
     userPostCount() {
       return Object.keys(this.user.posts).length;
-    },
-  },
-  filters: {
-    humanFriendlyDate(date) {
-      return moment.unix(date).format('MMMM Do YYYY, h:mm:ss a');
-    },
-    humanFromNow(date) {
-      return moment.unix(date).fromNow();
     },
   },
 };
