@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <div>
-      <div
-          v-bind:key="thread['.key']"
-          class="col-large push-top"
-      >
-        <h2>{{ thread.title }}</h2>
+  <div
+      v-bind:key="thread['.key']"
+      class="col-large push-top"
+  >
+    <h2>{{ thread.title }}</h2>
 
-        <PostList :posts="posts" />
+    <p>
+      By <a href="#" class="link-unstyled">Robin</a>,
+      <AppDate :timestamp="thread.publishedAt" />.
 
-        <PostEditor
-          @save="addPost"
-          :threadId="id"
-        />
+      <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">
+        3 replies by 3 contributors
+      </span>
+    </p>
 
-      </div>
-    </div>
+    <PostList :posts="posts" />
+
+    <PostEditor
+      @save="addPost"
+      :threadId="id"
+    />
+
   </div>
 </template>
 

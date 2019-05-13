@@ -29,12 +29,8 @@
 <script>
 
 import { users } from '@/data.json';
-import AppDate from '@/components/AppDate.vue';
 
 export default {
-  components: {
-    AppDate,
-  },
   props: {
     post: {
       required: true,

@@ -1,7 +1,5 @@
 <template>
-  <span :title="timestamp | humanFriendlyDate">
-    {{ timestamp | humanFromNow }}
-  </span>
+  <span :title="timestamp | humanFriendlyDate">{{ timestamp | humanFromNow }}</span>
 </template>
 
 <script>
