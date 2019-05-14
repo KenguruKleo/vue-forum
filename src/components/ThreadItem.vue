@@ -26,7 +26,6 @@
 
 <script>
 
-import { threads, posts as sourcePosts, users } from '@/data.json';
 import PostList from '@/components/PostList.vue';
 import PostEditor from '@/components/PostEditor.vue';
 
@@ -41,25 +40,24 @@ export default {
       type: String,
     },
   },
-  data() {
-    return {
-      thread: threads[this.id],
-    };
-  },
   computed: {
     posts() {
       return Object
         .values(this.thread.posts)
-        .map(postId => sourcePosts[postId]);
+        .map(postId => this.$store.state.posts[postId]);
+    },
+    thread() {
+      return this.$store.state.threads[this.id];
     },
   },
   methods: {
     addPost({ post }) {
       const postId = post['.key'];
 
-      this.$set(sourcePosts, postId, post);
+      // TODO - update to action
+      this.$set(this.$store.state.posts, postId, post);
       this.$set(this.thread.posts, postId, postId);
-      this.$set(users[post.userId].posts, postId, postId);
+      this.$set(this.$store.state.users[post.userId].posts, postId, postId);
     },
   },
 };

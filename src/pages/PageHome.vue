@@ -11,16 +11,15 @@
 <script>
 
 import CategoryList from '@/components/CategoryList.vue';
-import { categories } from '@/data.json';
 
 export default {
   components: {
     CategoryList,
   },
-  data() {
-    return {
-      categories: Object.values(categories),
-    };
+  computed: {
+    categories() {
+      return Object.values(this.$store.state.categories);
+    },
   },
 };
 

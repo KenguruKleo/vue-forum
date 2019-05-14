@@ -15,7 +15,6 @@
 <script>
 
 import ForumList from '@/components/ForumList.vue';
-import { forums } from '@/data.json';
 
 export default {
   components: { ForumList },
@@ -29,7 +28,7 @@ export default {
     forums() {
       return Object
         .values(this.category.forums)
-        .map(forumId => forums[forumId]);
+        .map(forumId => this.$store.state.forums[forumId]);
     },
   },
 };

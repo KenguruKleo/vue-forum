@@ -10,8 +10,6 @@
 
 import ThreadList from '@/components/ThreadList.vue';
 
-import { forums, threads } from '@/data.json';
-
 export default {
   components: {
     ThreadList,
@@ -24,10 +22,10 @@ export default {
   },
   computed: {
     threads() {
-      const forum = forums[this.id];
+      const forum = this.$store.state.forums[this.id];
       return Object
         .values(forum.threads)
-        .map(threadId => threads[threadId]);
+        .map(threadId => this.$store.state.threads[threadId]);
     },
   },
 };
