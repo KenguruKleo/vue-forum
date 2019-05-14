@@ -1,14 +1,37 @@
 <template>
-  <ThreadItem :id="id"/>
+  <div
+    v-bind:key="thread['.key']"
+    class="col-large push-top"
+  >
+    <h2>{{ thread.title }}</h2>
+
+    <p>
+      By <a href="#" class="link-unstyled">Robin</a>,
+      <AppDate :timestamp="thread.publishedAt" />.
+
+      <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">
+        3 replies by 3 contributors
+      </span>
+    </p>
+
+    <PostList :posts="posts" />
+
+    <PostEditor
+      :threadId="id"
+    />
+
+  </div>
 </template>
 
 <script>
 
-import ThreadItem from '@/components/ThreadItem.vue';
+import PostList from '@/components/PostList.vue';
+import PostEditor from '@/components/PostEditor.vue';
 
 export default {
   components: {
-    ThreadItem,
+    PostList,
+    PostEditor,
   },
   props: {
     id: {
@@ -16,10 +39,16 @@ export default {
       type: String,
     },
   },
+  computed: {
+    posts() {
+      return Object
+        .values(this.thread.posts)
+        .map(postId => this.$store.state.posts[postId]);
+    },
+    thread() {
+      return this.$store.state.threads[this.id];
+    },
+  },
 };
 
 </script>
-
-<style scoped>
-
-</style>
