@@ -8,6 +8,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     ...sourceData,
+    authId: 'NnooaWj4KHVxbhKwO1pEdfaQDsD2',
+  },
+  getters: {
+    authUser(state) {
+      return state.users[state.authId];
+    },
   },
   actions: {
     createPost({ commit }, post) {

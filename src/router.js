@@ -4,6 +4,7 @@ import Home from '@/pages/PageHome.vue';
 import Category from '@/pages/PageCategory.vue';
 import Forum from '@/pages/PageForum.vue';
 import ThreadShow from '@/pages/PageThreadShow.vue';
+import Profile from '@/pages/PageProfile.vue';
 import NotFound from '@/pages/PageNotFound.vue';
 
 Vue.use(Router);
@@ -34,6 +35,11 @@ export default new Router({
       name: 'Forum',
       component: Forum,
       props: true,
+    },
+    {
+      path: '/me',
+      name: 'Profile',
+      component: Profile,
     },
     {
       path: '/about',
