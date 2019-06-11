@@ -42,6 +42,12 @@ export default new Router({
       component: Profile,
     },
     {
+      path: '/me/edit',
+      name: 'ProfileEdit',
+      component: Profile,
+      props: { edit: true },
+    },
+    {
       path: '/about',
       name: 'About',
       // route level code-splitting
