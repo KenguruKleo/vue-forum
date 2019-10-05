@@ -4,14 +4,10 @@
     <UserProfileCard
       v-if="!edit"
       :user="user"
-      :userThreadsCount="userThreadsCount"
-      :userPostsCount="userPostsCount"
     />
     <UserProfileCardEditor
       v-else
       :user="user"
-      :userThreadsCount="userThreadsCount"
-      :userPostsCount="userPostsCount"
     />
 
     <div class="col-7 push-top">
@@ -33,7 +29,6 @@
 <script>
 import PostList from '@/components/PostList.vue';
 import { mapGetters } from 'vuex';
-import { countObjectProperties } from '@/utils';
 import UserProfileCard from '@/components/UserProfileCard.vue';
 import UserProfileCardEditor from '@/components/UserProfileCardEditor.vue';
 
@@ -43,12 +38,6 @@ export default {
     ...mapGetters({
       user: 'authUser',
     }),
-    userThreadsCount() {
-      return countObjectProperties(this.user.threads);
-    },
-    userPostsCount() {
-      return countObjectProperties(this.user.posts);
-    },
     userPosts() {
       return (Object.values(this.user.posts || {}))
         .map(postId => this.$store.state.posts[postId]);

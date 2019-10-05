@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { countObjectProperties } from '@/utils';
 import PostEditor from '@/components/PostEditor.vue';
 
 export default {
@@ -71,7 +70,7 @@ export default {
       return this.$store.state.users[this.post.userId];
     },
     userPostCount() {
-      return countObjectProperties(this.user.posts);
+      return this.$store.getters.userPostCount(this.post.userId);
     },
   },
 };
