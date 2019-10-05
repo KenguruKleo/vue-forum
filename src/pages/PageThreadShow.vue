@@ -3,7 +3,16 @@
     v-bind:key="thread['.key']"
     class="col-large push-top"
   >
-    <h2>{{ thread.title }}</h2>
+    <h2>
+      {{ thread.title }}
+      <router-link
+        :to="{ name: 'ThreadEdit', id: this.id }"
+        class="btn-green btn-small"
+        tag="button"
+      >
+        Edit Thread
+      </router-link>
+    </h2>
 
     <p>
       By <a href="#" class="link-unstyled">Robin</a>,

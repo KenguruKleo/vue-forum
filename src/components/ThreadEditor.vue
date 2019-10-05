@@ -18,7 +18,9 @@
 
     <div class="btn-group">
       <button class="btn btn-ghost">Cancel</button>
-      <button class="btn btn-blue" type="submit" name="Publish">Publish </button>
+      <button class="btn btn-blue" type="submit" name="Publish">
+        {{isUpdate ? 'Update' : 'Publish'}}
+      </button>
     </div>
   </form>
 </template>
@@ -42,6 +44,11 @@ export default {
         text: this.text,
       },
     };
+  },
+  computed: {
+    isUpdate() {
+      return !!this.title;
+    },
   },
   methods: {
     save() {
