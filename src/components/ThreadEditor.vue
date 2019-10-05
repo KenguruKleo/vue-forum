@@ -17,7 +17,7 @@
     </div>
 
     <div class="btn-group">
-      <button class="btn btn-ghost">Cancel</button>
+      <button @click.prevent="cancel" class="btn btn-ghost">Cancel</button>
       <button class="btn btn-blue" type="submit" name="Publish">
         {{isUpdate ? 'Update' : 'Publish'}}
       </button>
