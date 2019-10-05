@@ -33,6 +33,12 @@ export default {
     },
     post: {
       type: Object,
+      validator(value) {
+        return (
+          typeof value['.key'] === 'string'
+          && typeof value.text === 'string'
+        );
+      },
     },
   },
 
