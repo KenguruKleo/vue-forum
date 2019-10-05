@@ -21,18 +21,42 @@
 export default {
   data() {
     return {
-      text: '',
+      text: this.post ? this.post.text : '',
     };
   },
+
   props: {
     threadId: {
-      required: true,
+      required: false,
       type: String,
     },
+    post: {
+      type: Object,
+    },
   },
+
+  computed: {
+    isUpdate() {
+      return !!this.post;
+    },
+  },
+
   methods: {
     save() {
-      const post = {
+      this.persist()
+        .then((post) => {
+          this.$emit('save', { post });
+        });
+    },
+
+    persist() {
+      return this.isUpdate
+        ? this.update()
+        : this.create();
+    },
+
+    create() {
+      const payload = {
         text: this.text,
 
         threadId: this.threadId,
@@ -40,8 +64,16 @@ export default {
 
       this.text = '';
 
-      this.$store.dispatch('createPost', post);
-      this.$emit('save', { post });
+      return this.$store.dispatch('createPost', payload);
+    },
+
+    update() {
+      const payload = {
+        id: this.post['.key'],
+        text: this.text,
+      };
+
+      return this.$store.dispatch('updatePost', payload);
     },
   },
 };

@@ -442,6 +442,10 @@ figcaption {
     margin-bottom: 20px;
 }
 
+.post-content>div {
+    width: 100%;
+}
+
 .post-content pre {
     display: grid;
     overflow: auto;
