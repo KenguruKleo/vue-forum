@@ -32,17 +32,6 @@ export default new Vuex.Store({
       return Promise.resolve(state.posts[postId]);
     },
 
-    updatePost({ commit, state }, { id, text }) {
-      return new Promise((resolve) => {
-        const post = {
-          ...state.posts[id],
-          text,
-        };
-        commit('setPost', { postId: id, post });
-        resolve(post);
-      });
-    },
-
     updateUser({ commit }, user) {
       commit('setUser', { userId: user['.key'], user });
     },
@@ -72,20 +61,34 @@ export default new Vuex.Store({
       });
     },
 
-    updateThread({ commit, state }, { id, title, text }) {
+    updatePost({ commit, state }, { id, text }) {
+      return new Promise((resolve) => {
+        const post = {
+          ...state.posts[id],
+          text,
+          edited: {
+            at: Math.floor(Date.now() / 1000),
+            by: state.authId,
+          },
+        };
+        commit('setPost', { postId: id, post });
+        resolve(post);
+      });
+    },
+
+    updateThread({ commit, state, dispatch }, { id, title, text }) {
       return new Promise((resolve) => {
         const thread = {
           ...state.threads[id],
           title,
         };
-        const post = {
-          ...state.posts[thread.firstPostId],
-          text,
-        };
-        commit('setThread', { threadId: id, thread });
-        commit('setPost', { postId: thread.firstPostId, post });
 
-        resolve(thread);
+        commit('setThread', { threadId: id, thread });
+
+        dispatch('updatePost', { id: thread.firstPostId, text })
+          .then(() => {
+            resolve(thread);
+          });
       });
     },
   },
