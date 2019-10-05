@@ -15,11 +15,11 @@
     </h2>
 
     <p>
-      By <a href="#" class="link-unstyled">Robin</a>,
+      By <a href="#" class="link-unstyled">{{user.name}}</a>,
       <AppDate :timestamp="thread.publishedAt" />.
 
       <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">
-        3 replies by 3 contributors
+        {{repliesCount}} replies by {{contributorsCount}} contributors
       </span>
     </p>
 
@@ -49,6 +49,9 @@ export default {
     },
   },
   computed: {
+    user() {
+      return this.$store.state.users[this.thread.userId];
+    },
     posts() {
       return Object
         .values(this.thread.posts)
@@ -56,6 +59,16 @@ export default {
     },
     thread() {
       return this.$store.state.threads[this.id];
+    },
+    repliesCount() {
+      return this.$store.getters.threadRepliesCount(this.thread['.key']);
+    },
+    contributorsCount() {
+      const userReplies = Object.keys(this.thread.posts)
+        .filter(postId => postId !== this.thread.firstPostId)
+        .map(postId => this.$store.state.posts[postId])
+        .map(post => post.userId);
+      return [...new Set(userReplies)].length;
     },
   },
 };
