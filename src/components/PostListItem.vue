@@ -17,15 +17,26 @@
     </div>
 
     <div class="post-content">
-      <div v-if="!editing" >
-        {{ post.text }}
-      </div>
-      <div v-else>
+      <div v-if="editing" >
         <PostEditor
           :post="post"
           @save="editing = false"
         />
       </div>
+      <template v-else >
+        <div>
+          {{ post.text }}
+        </div>
+        <a
+          @click.prevent="editing = true"
+          href="#"
+          style="margin-left: auto; padding-left: 5px;"
+          class="link-unstyled"
+          title="Make a change"
+        >
+          <i class="fa fa-pencil"></i>
+        </a>
+      </template>
     </div>
 
     <div class="post-date text-faded"><AppDate :timestamp="post.publishedAt" /></div>
